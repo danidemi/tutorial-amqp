@@ -1,4 +1,4 @@
-package com.danidemi.spring;
+package spring;
 
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;
