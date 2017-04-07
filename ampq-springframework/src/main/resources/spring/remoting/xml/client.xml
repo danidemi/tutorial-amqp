@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+
+    <bean id="client"
+          class="org.springframework.amqp.remoting.client.AmqpProxyFactoryBean">
+        <property name="amqpTemplate" ref="template"/>
+        <property name="serviceInterface" value="spring.remoting.xml.Echo"/>
+    </bean>
+
+    <rabbit:connection-factory id="connectionFactory" host="192.168.99.100" port="32769" password="guest" username="guest" />
+
+    <rabbit:template id="template" connection-factory="connectionFactory" reply-timeout="2000"
+                     routing-key="remoting.binding" exchange="remoting.exchange"
+    />
+
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <rabbit:queue name="myqueue"/>
+
+    <rabbit:direct-exchange name="remoting.exchange">
+        <rabbit:bindings>
+            <rabbit:binding queue="myqueue" key="remoting.binding"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+</beans>

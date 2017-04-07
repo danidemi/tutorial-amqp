@@ -1,4 +1,4 @@
-package spring;
+package spring.prodandcons;
 
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;
