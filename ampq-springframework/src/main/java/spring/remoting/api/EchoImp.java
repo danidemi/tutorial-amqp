@@ -1,4 +1,4 @@
-package spring.remoting.xml;
+package spring.remoting.api;
 
 public class EchoImp implements Echo {
 

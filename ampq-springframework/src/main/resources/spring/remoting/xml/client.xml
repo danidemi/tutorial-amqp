@@ -7,7 +7,7 @@
     <bean id="client"
           class="org.springframework.amqp.remoting.client.AmqpProxyFactoryBean">
         <property name="amqpTemplate" ref="template"/>
-        <property name="serviceInterface" value="spring.remoting.xml.Echo"/>
+        <property name="serviceInterface" value="spring.remoting.api.Echo"/>
     </bean>
 
     <rabbit:connection-factory id="connectionFactory" host="192.168.99.100" port="32769" password="guest" username="guest" />
@@ -18,11 +18,11 @@
 
     <rabbit:admin connection-factory="connectionFactory"/>
 
-    <rabbit:queue name="myqueue"/>
+    <rabbit:queue name="remotingQueue"/>
 
     <rabbit:direct-exchange name="remoting.exchange">
         <rabbit:bindings>
-            <rabbit:binding queue="myqueue" key="remoting.binding"/>
+            <rabbit:binding queue="remotingQueue" key="remoting.binding"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 

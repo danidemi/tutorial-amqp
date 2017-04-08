@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!--
+        <target>System.out</target>
+        <withJansi>false</withJansi>
+        -->
+        <encoder>
+            <pattern>ooo %d{mm:ss.SSS} %-5p [%-31t] [%-54logger{0}] %marker%m%ex{full} - %logger - %F:%L%n</pattern>
+            <!-- this quadruples logging throughput risking to miss logs on unexpected exit -->
+            <immediateFlush>false</immediateFlush>
+            <!-- this prints out the pattern at the head of the file -->
+            <outputPatternAsHeader>false</outputPatternAsHeader>
+        </encoder>
+    </appender>
+
+    <root level="ALL">
+        <appender-ref ref="console" />
+    </root>
+
+    <logger name="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer" level="DEBUG" />
+    <logger name="org.springframework.amqp.rabbit.listener.BlockingQueueConsumer" level="INFO" />
+
+</configuration>

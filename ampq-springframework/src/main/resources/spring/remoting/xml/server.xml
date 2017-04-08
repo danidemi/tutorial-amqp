@@ -6,21 +6,21 @@
 
     <bean id="listener"
           class="org.springframework.amqp.remoting.service.AmqpInvokerServiceExporter">
-        <property name="serviceInterface" value="spring.remoting.xml.Echo" />
+        <property name="serviceInterface" value="spring.remoting.api.Echo" />
         <property name="service" ref="service" />
         <property name="amqpTemplate" ref="template" />
     </bean>
 
-    <bean id="service" class="spring.remoting.xml.EchoImp" />
+    <bean id="service" class="spring.remoting.api.EchoImp" />
 
     <rabbit:connection-factory id="connectionFactory" host="192.168.99.100" port="32769" password="guest" username="guest" />
 
     <rabbit:template id="template" connection-factory="connectionFactory" />
 
-    <rabbit:queue name="myqueue" />
+    <rabbit:queue name="remotingQueue" />
 
     <rabbit:listener-container connection-factory="connectionFactory">
-        <rabbit:listener ref="listener" queue-names="myqueue" />
+        <rabbit:listener ref="listener" queue-names="remotingQueue" />
     </rabbit:listener-container>
 
 </beans>
