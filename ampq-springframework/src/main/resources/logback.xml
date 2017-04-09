@@ -7,7 +7,7 @@
         <withJansi>false</withJansi>
         -->
         <encoder>
-            <pattern>ooo %d{mm:ss.SSS} %-5p [%-31t] [%-54logger{0}] %marker%m%ex{full} - %logger - %F:%L%n</pattern>
+            <pattern>%d{mm:ss.SSS} %-5p [%-31t] [%-54logger{0}] %marker%m%ex{full} - %logger - %F:%L%n</pattern>
             <!-- this quadruples logging throughput risking to miss logs on unexpected exit -->
             <immediateFlush>false</immediateFlush>
             <!-- this prints out the pattern at the head of the file -->
@@ -15,11 +15,13 @@
         </encoder>
     </appender>
 
-    <root level="ALL">
+    <root level="WARN">
         <appender-ref ref="console" />
     </root>
 
-    <logger name="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer" level="DEBUG" />
-    <logger name="org.springframework.amqp.rabbit.listener.BlockingQueueConsumer" level="INFO" />
+    <logger name="org.springframework.amqp" level="TRACE" />
+    <logger name="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer" level="TRACE" />
+    <logger name="org.springframework.amqp.rabbit.listener.BlockingQueueConsumer" level="TRACE" />
+    <logger name="org.springframework.beans" level="WARN" />
 
 </configuration>

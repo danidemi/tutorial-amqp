@@ -27,9 +27,8 @@ public class JavaServer {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(JavaServer.class);
         ctx.refresh();
-        ctx.start();
-        AmqpInvokerServiceExporter exporter = ctx.getBean(AmqpInvokerServiceExporter.class);
-
+        //ctx.start();
+        //AmqpInvokerServiceExporter exporter = ctx.getBean(AmqpInvokerServiceExporter.class);
 
     }
 
@@ -58,6 +57,7 @@ public class JavaServer {
 
     @Bean AmqpTemplate amqpTemplate(ConnectionFactory factory) {
         RabbitTemplate template = new RabbitTemplate(factory);
+        template.setRoutingKey("remoting.binding");
         return template;
     }
 
@@ -70,7 +70,7 @@ public class JavaServer {
     }
 
     @Bean
-    SimpleMessageListenerContainer listener(ConnectionFactory facotry, AmqpInvokerServiceExporter listener) {
+    SimpleMessageListenerContainer listener(ConnectionFactory facotry, AmqpInvokerServiceExporter listener, RabbitAdmin rabbitAdmin, Queue queue) {
         // set up the listener and container
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(facotry);
 
@@ -82,7 +82,9 @@ public class JavaServer {
 //        MessageListenerAdapter adapter = new MessageListenerAdapter(listener);
         container.setMessageListener(listener);
         container.setQueueNames(QUEUE_NAME);
-        container.start();
+        container.setRabbitAdmin(rabbitAdmin);
+        container.setQueues(queue);
+        //container.start();
         return container;
     }
 
